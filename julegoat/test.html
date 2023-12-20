@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .carousel-container {
+      width: 300px;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    .carousel {
+      display: flex;
+      transition: transform 3s ease-in-out;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .carousel-item img {
+      max-width: 100%; /* Set maximum width to 100% of the container */
+      max-height: 150px; /* Set maximum height as needed */
+      display: block;
+      margin: auto; /* Center the image horizontally */
+    }
+
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<center><h1>Slot selector</h1></center>
+<div class="carousel-container">
+  <div class="carousel" id="carousel-container">
+    <!-- Carousel items will be dynamically added here -->
+  </div>
+</div>
+
+<button onclick="scrollCarousel()">Spin the Carousel</button>
+<button onclick="resetCarousel()">Reset</button>
+
+<script>
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const carouselContainer = document.getElementById('carousel-container');
+
+// Define the list of image paths
+const imagePaths = [
+  "./slots/pirots.jpg",
+  "./slots/starz.jpg",
+  "./slots/the rave.jpg",
+  "./slots/pirots.jpg",
+  "./slots/starz.jpg",
+  "./slots/the rave.jpg",
+  "./slots/pirots.jpg",
+  "./slots/starz.jpg",
+  "./slots/the rave.jpg",
+  "./slots/pirots.jpg",
+  "./slots/starz.jpg",
+  "./slots/the rave.jpg",
+  "./slots/pirots.jpg",
+  "./slots/starz.jpg",
+  "./slots/the rave.jpg",
+  "./slots/pirots.jpg",
+  "./slots/starz.jpg",
+  "./slots/the rave.jpg",
+
+  // Add more image paths as needed
+];
+
+// Create carousel items dynamically with images
+imagePaths.forEach(imagePath => {
+  const item = document.createElement('div');
+  const img = document.createElement('img');
+  img.src = imagePath;
+  img.alt = 'Slot Image';
+  item.className = 'carousel-item';
+  item.appendChild(img);
+  carouselContainer.appendChild(item);
+});
+imagePaths.forEach(imagePath => {
+  const item = document.createElement('div');
+  const img = document.createElement('img');
+  img.src = imagePath;
+  img.alt = 'Slot Image';
+  item.className = 'carousel-item';
+  item.appendChild(img);
+  carouselContainer.appendChild(item);
+});
+
+const carousel = document.querySelector('.carousel');
+
+function scrollCarousel() {
+  const totalWidth = carouselContainer.scrollWidth;
+  const randomPosition = getRandomInt(13, 26) * (300);
+
+  carousel.style.transition = 'transform 4s ease-out';
+  carousel.style.transform = `translateX(-${randomPosition}px)`;
+}
+
+function resetCarousel() {
+  carousel.style.transition = 'none';
+  carousel.style.transform = 'translateX(0)';
+}
+</script>
+
+</body>
+</html>

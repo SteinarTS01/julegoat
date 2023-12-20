@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+
+<link rel="icon" href="header.png"ype="image/x-icon">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+}
+  
+html, body {
+
+  height: 100%;
+}
+
+body {
+  background-image: url('/bakgrunn.png');
+  background-size: cover;
+  font-family: 'Bungee Spice', sans-serif;
+  
+}
+
+/* Rest of your existing styles... */
+
+h1 {
+  text-align: center;
+  padding: 15px;
+  padding-bottom: 75px;
+  font-size: 80px; 
+}
+h2 {
+  font-size: 40px;
+}
+
+.carousel-container {
+  width: 600px;
+  overflow: hidden;
+  margin: auto;
+  
+}
+
+.carousel {
+  display: flex;
+  transition: transform 3s ease-in-out;
+  
+}
+
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.carousel-item img {
+  max-width: 100%; /* Set maximum width to 100% of the container */
+  max-height: 100%; /* Set maximum height as needed */
+  display: block;
+  margin: auto; /* Center the image horizontally */
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Bungee Spice', sans-serif;
+  background-color: rgb(83, 83, 83);
+}
+  </style>
+</head>
+<body>
+
+<h1>JuleGoat</h1>
+<center><h2 id="Bet">Bet: </h2></center>
+<center><h2 id="slotsLeft">Slots Left: </h2></center>
+
+<div class="carousel-container">
+  <div class="carousel" id="carousel-container">
+    <!-- Carousel items will be dynamically added here -->
+  </div>
+</div>
+
+<button onclick="scrollCarousel()">Spin the wheel</button>
+<button onclick="refreshSite()">Reset</button>
+
+<audio id="carouselSound" src="opening.mp3" preload="auto"></audio>
+<script>
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+let SlotsLeft = 0;
+
+const carouselContainer = document.getElementById('carousel-container');
+
+// Define the list of image paths
+const imagePaths = [
+"./slots/banatown.jpg",
+  "./slots/barbarossa.jpg",
+  "./slots/big bass.jpg",
+  "./slots/blazing mammoth xl swift hits.jpg",
+  "./slots/buffalo.jpg",
+  "./slots/chaos crew.jpg",
+  "./slots/drill that gold.jfif.jpg",
+  "./slots/fire in the hole.jpg",
+  "./slots/hermes bonanza.jfif.jpg",
+  "./slots/juicy.jpg",
+  "./slots/khonsu.jfif.jpg",
+  "./slots/le bandit.jpg",
+  "./slots/lucky lady.jpg",
+  "./slots/madam destiny.jpg",
+  "./slots/mental.jpg",
+  "./slots/moneycart 3.jpg",
+  "./slots/moon princess.jfif.jpg",
+  "./slots/power of merlin mega.jpg",
+  "./slots/release.jpg",
+  "./slots/sant quentin.jpg",
+  "./slots/big bamboo.jpg",
+  "./slots/big bass halloween.jfif.jpg",
+  "./slots/big shots.jpg",
+  "./slots/buffalo king megaways.jfif.jpg",
+  "./slots/chaos crew 2.jfif.jpg",
+  "./slots/christmas kindom.jpg",
+  "./slots/cygnus.jfif.jpg",
+  "./slots/eastern emerald.jpg",
+  "./slots/extra juicy mega.jpg",
+  "./slots/gates.jpg",
+  "./slots/hugo legacy.jfif.jpg",
+  "./slots/lucky grace.jpg",
+  "./slots/monetrain 3.jpg",
+  "./slots/money train 4.jpg",
+  "./slots/mountain king.jpg",
+  "./slots/muertos megaways.jpg",
+  "./slots/pirots 2.jpg",
+  "./slots/raging rex 2.jpg",
+  "./slots/reactoonz.jpg",
+  "./slots/rise of merlin.jfif.jpg",
+  "./slots/rock-vegas.jpg",
+  "./slots/santas great gift.jfif.jpg",
+  "./slots/shield of sparta.jpg",
+  "./slots/sky bounty.jfif.jpg",
+  "./slots/spartan king.jpg",
+  "./slots/starlight.jfif.jpg",
+  "./slots/sweet bonanza xmas.jpg",
+  "./slots/sweet-bonanza-slot.jpg",
+  "./slots/tome of madness.jpg",
+  "./slots/twilight princess.jfif.jpg",
+  "./slots/viking forge.jfif.jpg",
+  "./slots/wanted.jfif.jpg",
+  "./slots/yeti.jfif.jpg",
+  "./slots/zeus or hades.jpg",
+  "./slots/3 buzzing wilds.jpg",
+  "./slots/ankh-of-anubis.jpg",
+  "./slots/beast below.jpg",
+  "./slots/book of dead.jpg",
+  "./slots/darkness.jpg",
+  "./slots/dragon tribe.jpg",
+  "./slots/gates 1000.jpg",
+  "./slots/gems.jpg",
+  "./slots/golden glyph 2.jpg",
+  "./slots/gravity bonanza.jpg",
+  "./slots/hand anubis.jpg",
+  "./slots/looney pop.jpg",
+  "./slots/lord merlin.jpg",
+  "./slots/multifly.jpg",
+  "./slots/mustang gold.jpg",
+  "./slots/nile future.jpg",
+  "./slots/outlaws.jpg",
+  "./slots/pirots.jpg",
+  "./slots/rascal riches.jfif.jpg",
+  "./slots/release the kraken 1.jpg",
+  "./slots/rip city.jfif.jpg",
+  "./slots/san-quentin-slot-logo.jpg",
+  "./slots/santas wonderland.jpg",
+  "./slots/starlight.jpg",
+  "./slots/starz.jpg",
+  "./slots/sugar rush xmas.jpg",
+  "./slots/the dog house.jfif.jpg",
+  "./slots/the rave.jpg",
+  "./slots/tiger glory.jpg",
+  "./slots/viking clash.jpg",
+  "./slots/wolf gold.jpg",
+  "./slots/badgers miners.jfif.jpg",
+];
+ 
+
+// Create carousel items dynamically with images
+imagePaths.forEach(imagePath => {
+  const item = document.createElement('div');
+  const img = document.createElement('img');
+  img.src = imagePath;
+  img.alt = 'Slot Image';
+  item.className = 'carousel-item';
+  item.appendChild(img);
+  carouselContainer.appendChild(item);
+});
+
+imagePaths.forEach(imagePath => {
+  const item = document.createElement('div');
+  const img = document.createElement('img');
+  img.src = imagePath;
+  img.alt = 'Bildenr: ' + SlotsLeft;
+  item.className = 'carousel-item';
+  item.appendChild(img);
+  carouselContainer.appendChild(item);
+  SlotsLeft++
+});
+
+const Initialslots = SlotsLeft
+const carousel = document.querySelector('.carousel');
+const carouselSound = document.getElementById('carouselSound');
+
+updateSlotsLeft();
+function scrollCarousel() {
+  carouselSound.play();
+  
+  // Ensure the random index is within the range of the remaining slots
+  const randomIndex = getRandomInt(Initialslots, (Initialslots + SlotsLeft - 1));
+
+  if (SlotsLeft > 0) {
+    SlotsLeft--;
+
+    const randomPosition = randomIndex * 600;
+    carousel.style.transition = 'transform 7.5s ease-in-out';
+    carousel.style.transform = `translateX(-${randomPosition}px)`;
+
+    scrollBet();
+
+    // Remove the div after the transition ends
+    setTimeout(() => {
+      removeCurrentDiv(randomIndex);
+      resetCarousel();
+    }, 15000); // 15 seconds, matching the transition duration
+  } else {
+    console.log("No slots left.");
+    // Handle the case when there are no slots left
+  }
+}
+
+
+
+
+function scrollBet() {
+  const bet = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,10,10,10,25];
+  const randomIndex = Math.floor(Math.random() * bet.length);
+  const randomBet = bet[randomIndex];
+  const slotsLeftElement = document.getElementById('Bet');
+  slotsLeftElement.textContent = `Bet: ${randomBet}`;
+}
+function removeCurrentDiv(index) {
+  console.log("SLOTNR: " + (index))
+  const divToRemove = document.querySelectorAll('.carousel-item')[index];
+  if (divToRemove) {
+    divToRemove.remove();
+  }
+}
+
+function resetCarousel() {
+  carousel.style.transition = 'transform 2s ease-out';
+  carousel.style.transform = 'translateX(0)';
+  updateSlotsLeft();
+}
+
+function refreshSite() {
+  location.reload();
+}
+
+function updateSlotsLeft() {
+  const slotsLeftElement = document.getElementById('slotsLeft');
+  slotsLeftElement.textContent = `Slots Left: ${SlotsLeft}`;
+}
+</script>
+
+</body>
+</html>
